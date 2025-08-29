@@ -1,0 +1,44 @@
+{
+    "projectId": "almost-vault",
+    "endpoint": "https://fra.cloud.appwrite.io/v1",
+    "functions": [
+        {
+            "$id": "api",
+            "name": "api",
+            "runtime": "node-22",
+            "specification": "s-4vcpu-4gb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 30,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "function"
+        }
+    ],
+    "sites": [
+        {
+            "$id": "webapp",
+            "name": "webapp",
+            "framework": "vite",
+            "adapter": "static",
+            "buildRuntime": "node-22",
+            "installCommand": "npm install",
+            "buildCommand": "npm run build",
+            "outputDirectory": "./dist",
+            "fallbackFile": "index.html",
+            "specification": "s-4vcpu-4gb",
+            "enabled": true,
+            "timeout": 30,
+            "logging": true,
+            "path": "site"
+        }
+    ]
+}
