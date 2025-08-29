@@ -19,6 +19,22 @@
         <p class="text-center mt-6 text-neutral-300">
           Quickly share passwords and secrets.<br />Secure, modern, simple.
         </p>
+
+        <div class="flex justify-center mt-4 gap-4">
+          <a
+            class="text-center underline text-neutral-500"
+            href="#"
+            target="_blank"
+            >Case study</a
+          >
+
+            <a
+            class="text-center underline text-neutral-500"
+            href="https://github.com/Meldiron/almost-vault"
+            target="_blank"
+            >GitHub</a
+          >
+        </div>
       </div>
 
       <div class="tabs w-full" id="demo-tabs-with-panels">
@@ -127,21 +143,26 @@
             <header>
               <h2>Decrypt</h2>
               <p>
-                Read a secret value using secret ID provided when creating a secret.
+                Read a secret value using secret ID provided when creating a
+                secret.
               </p>
             </header>
             <section>
               <form class="form grid gap-6">
                 <div class="grid gap-3">
-                  <label for="secret-id"
-                    >Secret ID</label
-                  >
-                  <input type="text" placeholder="sec_h8fVjsD9" id="secret-id" />
+                  <label for="secret-id">Secret ID</label>
+                  <input
+                    type="text"
+                    placeholder="sec_h8fVjsD9"
+                    id="secret-id"
+                  />
                 </div>
               </form>
             </section>
             <footer>
-              <button type="button" class="btn w-full">Decrypt the secret</button>
+              <button type="button" class="btn w-full">
+                Decrypt the secret
+              </button>
             </footer>
           </div>
         </div>
@@ -185,6 +206,39 @@
               with anyone, anywhere. A secret is created and stored securely.
               You can limit amount of reads, and configure when your secret's
               URL expires.
+            </p>
+          </section>
+        </details>
+        <details class="group border-b last:border-b-0">
+          <summary
+            class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md"
+          >
+            <h2
+              class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline"
+            >
+              Is Almost Vault free?
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </h2>
+          </summary>
+          <section class="pb-4">
+            <p class="text-sm">
+              Yes, it's free and open-source. You can use it for infimite
+              encryptions and decriptions, with no ads. If services ever go
+              offline, you can self-host it using the source code available on
+              GitHub.
             </p>
           </section>
         </details>
