@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Almost Vault</title>
+  </head>
+  <body>
+    <div class="mx-auto max-w-2xl p-4" x-data="{ text: '123' }">
+      <div class="py-20">
+        <div class="w-full mb-6 flex justify-center">
+          <img class="w-20" src="/icon.svg" />
+        </div>
+
+        <h1 class="text-5xl tracking-wider text-center font-bold">
+          Almost Vault
+        </h1>
+        <p class="text-center mt-6 text-neutral-300">
+          Quickly share passwords and secrets.<br />Secure, modern, simple.
+        </p>
+      </div>
+
+      <div class="tabs w-full" id="demo-tabs-with-panels">
+        <nav role="tablist" aria-orientation="horizontal" class="w-full">
+          <button
+            type="button"
+            role="tab"
+            id="demo-tabs-with-panels-tab-1"
+            aria-controls="demo-tabs-with-panels-panel-1"
+            aria-selected="true"
+            tabindex="0"
+          >
+            Encrypt
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            id="demo-tabs-with-panels-tab-2"
+            aria-controls="demo-tabs-with-panels-panel-2"
+            aria-selected="false"
+            tabindex="0"
+          >
+            Decrypt
+          </button>
+        </nav>
+
+        <div
+          role="tabpanel"
+          id="demo-tabs-with-panels-panel-1"
+          aria-labelledby="demo-tabs-with-panels-tab-1"
+          tabindex="-1"
+          aria-selected="true"
+        >
+          <div class="card">
+            <header>
+              <h2>Encrypt</h2>
+              <p>
+                Store a secret securely. Once created, you will recieve URL to
+                share with anyone.
+              </p>
+            </header>
+            <section>
+              <form class="form grid gap-6">
+                <div class="grid gap-3">
+                  <label for="secret">Secret</label>
+                  <textarea
+                    required="required"
+                    id="secret"
+                    class="textarea h-32"
+                    placeholder="sk-proj-YNzI8C7CTp-E-2DWaCgT09xwUKjDIZYj5K3iplcAqtlawZQsDIIQc-oSha45TVtNuzkcoqSFsaAKLT3BlbkFJk3v6sZYRaDT-e0_bpS7oeFkavdD8AdmAiNDRlbfZQmGucnps..."
+                  ></textarea>
+                </div>
+                <div
+                  class="flex items-center justify-between flex flex-col sm:flex-row gap-4 w-full"
+                >
+                  <div class="grid gap-3 w-full">
+                    <label for="ttl">Time-to-live</label>
+                    <select
+                      required="required"
+                      id="ttl"
+                      class="select w-full sm:w-[180px]"
+                    >
+                      <optgroup label="Time-to-live">
+                        <option>An Hour</option>
+                        <option>A Day</option>
+                        <option>A Week</option>
+                        <option>A Month</option>
+                        <option>A Year</option>
+                        <option>Custom</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <div class="grid gap-3 w-full sm:justify-end sm:items-end">
+                    <label for="reads">Reads allowed</label>
+                    <input
+                      class="input w-full sm:w-[180px]"
+                      id="reads"
+                      type="number"
+                      required="required"
+                      value="1"
+                      placeholder="1"
+                    />
+                  </div>
+                </div>
+              </form>
+            </section>
+            <footer>
+              <button type="button" class="btn w-full">
+                Encrypt my secret
+              </button>
+            </footer>
+          </div>
+        </div>
+
+        <div
+          role="tabpanel"
+          id="demo-tabs-with-panels-panel-2"
+          aria-labelledby="demo-tabs-with-panels-tab-2"
+          tabindex="-1"
+          aria-selected="false"
+          hidden
+        >
+          <div class="card">
+            <header>
+              <h2>Decrypt</h2>
+              <p>
+                Read a secret value using secret ID provided when creating a secret.
+              </p>
+            </header>
+            <section>
+              <form class="form grid gap-6">
+                <div class="grid gap-3">
+                  <label for="secret-id"
+                    >Secret ID</label
+                  >
+                  <input type="text" placeholder="sec_h8fVjsD9" id="secret-id" />
+                </div>
+              </form>
+            </section>
+            <footer>
+              <button type="button" class="btn w-full">Decrypt the secret</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-20">
+        <h1 class="text-5xl tracking-wider text-center font-bold">FAQ</h1>
+        <p class="text-center mt-6 text-neutral-300">
+          Frequently asked questions about the service.
+        </p>
+      </div>
+
+      <section class="accordion">
+        <details class="group border-b last:border-b-0">
+          <summary
+            class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md"
+          >
+            <h2
+              class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline"
+            >
+              What is Almost Vault?
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </h2>
+          </summary>
+          <section class="pb-4">
+            <p class="text-sm">
+              Almost Vault is free and open-source platform to share secrets
+              with anyone, anywhere. A secret is created and stored securely.
+              You can limit amount of reads, and configure when your secret's
+              URL expires.
+            </p>
+          </section>
+        </details>
+        <details class="group border-b last:border-b-0">
+          <summary
+            class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md"
+          >
+            <h2
+              class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline"
+            >
+              Is Almost Vault secure? How?
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </h2>
+          </summary>
+          <section class="pb-4">
+            <p class="text-sm">
+              Yes, Almost Vault is secure. By using AES-256, industry-standard
+              encryption, we store your data in unreadable format. This means
+              secrets are <b>NOT</b> stored in plain text. We advise anyone
+              curious to also check out the source code on GitHub to verify our
+              security practices.
+            </p>
+          </section>
+        </details>
+        <details class="group border-b last:border-b-0">
+          <summary
+            class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md"
+          >
+            <h2
+              class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline"
+            >
+              Can I get in touch?
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </h2>
+          </summary>
+          <section>
+            <p class="text-sm">
+              If you need help, please reach out to us via email at
+              <code>contact@almostapps.eu</code>
+            </p>
+          </section>
+        </details>
+      </section>
+
+      <div
+        class="mt-12 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-600 to-transparent"
+      ></div>
+
+      <div
+        class="mt-4 mb-2 flex gap-1.5 items-center justify-center text-neutral-300 text-sm"
+      >
+        <p>Powered by</p>
+        <a
+          class="flex items-center justify-center gap-1.5 hover:underline hover:text-white"
+          href="https://appwrite.io/"
+          target="_blank"
+          class=""
+        >
+          <img src="/appwrite.svg" class="size-4" />
+
+          <p>Appwrite</p></a
+        >
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
