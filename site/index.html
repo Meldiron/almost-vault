@@ -7,10 +7,10 @@
     <title>Almost Vault</title>
   </head>
   <body>
-    <div class="mx-auto max-w-2xl p-4" x-data="{ text: '123' }">
+    <div class="mx-auto max-w-2xl p-4">
       <div class="py-20">
         <div class="w-full mb-6 flex justify-center">
-          <img class="w-20" src="/icon.svg" />
+          <img class="w-20" src="/icon.svg" alt="Logo" />
         </div>
 
         <h1 class="text-5xl tracking-wider text-center font-bold">
@@ -28,7 +28,7 @@
             >Case study</a
           >
 
-            <a
+          <a
             class="text-center underline text-neutral-500"
             href="https://github.com/Meldiron/almost-vault"
             target="_blank"
@@ -63,6 +63,7 @@
         </nav>
 
         <div
+          x-data="encrypt"
           role="tabpanel"
           id="demo-tabs-with-panels-panel-1"
           aria-labelledby="demo-tabs-with-panels-tab-1"
@@ -78,55 +79,80 @@
               </p>
             </header>
             <section>
-              <form class="form grid gap-6">
+              <form x-on:submit.prevent="createRow()" class="form grid gap-6">
                 <div class="grid gap-3">
                   <label for="secret">Secret</label>
                   <textarea
+                    x-model="secret"
+                    minlength="1"
+                    maxlength="2048"
                     required="required"
                     id="secret"
+                    autofocus="autofocus"
                     class="textarea h-32"
                     placeholder="sk-proj-BGzj9S7CTp-zQqD4LbYt6f9y4GLMFtuUHjkozifULm2EadDjL-yXw3UWRovQTTef84f3eE9fgs34S04LibiZyLvw77A9fsVSscLJq-89RMJdx3n7UbWii7KHAHbfFScQooSltz7xLVxAviE2x76p9..."
                   ></textarea>
                 </div>
                 <div
-                  class="flex items-center justify-between flex flex-col sm:flex-row gap-4 w-full"
+                  class="flex items-center justify-between flex-col sm:flex-row gap-4 w-full"
                 >
                   <div class="grid gap-3 w-full">
                     <label for="ttl">Time-to-live</label>
                     <select
+                      x-model="ttl"
                       required="required"
                       id="ttl"
                       class="select w-full sm:w-[180px]"
                     >
-                      <optgroup label="Time-to-live">
-                        <option>An Hour</option>
-                        <option>A Day</option>
-                        <option>A Week</option>
-                        <option>A Month</option>
-                        <option>A Year</option>
-                        <option>Custom</option>
-                      </optgroup>
+                      <option value="hour">An Hour</option>
+                      <option value="day">A Day</option>
+                      <option value="week">A Week</option>
+                      <option value="month">A Month</option>
+                      <option value="year">A Year</option>
                     </select>
                   </div>
 
                   <div class="grid gap-3 w-full sm:justify-end sm:items-end">
                     <label for="reads">Reads allowed</label>
                     <input
+                      x-model="reads"
                       class="input w-full sm:w-[180px]"
                       id="reads"
                       type="number"
                       required="required"
                       value="1"
                       placeholder="1"
+                      min="1"
+                      max="1000"
                     />
                   </div>
                 </div>
+
+                <footer>
+                  <button x-bind:disabled="creating" type="submit" class="btn w-full">
+                    Encrypt my secret
+                  </button>
+                </footer>
               </form>
             </section>
-            <footer>
-              <button type="button" class="btn w-full">
-                Encrypt my secret
-              </button>
+          </div>
+          
+          <div x-show="row" class="card bg-green-950/[var(--bg-opacity)] [--bg-opacity:50%] border-green-900 mt-4">
+            <header>
+              <h2>Your encrypted secret was successfully created</h2>
+              <p>Share your secret with anyone in the world.</p>
+            </header>
+            <section class="text-sm">
+              <p>Summary:</p>
+              <ol class="mt-4 flex list-decimal flex-col gap-2 pl-6">
+                <li>Your secret can be read <b x-text="row.reads + (row.reads === 1 ? ' time' : ' times')"></b></li>
+                <li>Secret is available for <b>1 <span x-text="row.ttl"></span></b></li>
+                <li>Secret value is <b>securely encrypted</b></li>
+              </ol>
+            </section>
+            <footer class="flex sm:flex-row flex-col gap-2 items-center">
+                <button class="btn w-full sm:w-[fit-content]">Copy sharable URL</button>
+                <button class="btn-outline w-full sm:w-[fit-content]">Copy secret ID</button>
             </footer>
           </div>
         </div>
@@ -153,7 +179,7 @@
                   <label for="secret-id">Secret ID</label>
                   <input
                     type="text"
-                    placeholder="sec_h8fVjsD9"
+                    placeholder="sec_68b2ad1e001..."
                     id="secret-id"
                   />
                 </div>
@@ -329,6 +355,9 @@
         >
       </div>
     </div>
+
+    <div id="toaster" class="toaster"></div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
