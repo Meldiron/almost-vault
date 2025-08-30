@@ -14,11 +14,91 @@ Alpine.data("encrypt", () => ({
   secret: "",
   ttl: "day",
   reads: 1,
+  
+   init() {
+     // TODO: Implement
+   },
 
   creating: false,
   row: null,
 
-  createRow: async function() {    
+  copySecretId: async function() {
+    if (!this.row?.$id) return;
+    
+    try {
+      await navigator.clipboard.writeText(this.row.$id);
+      document.dispatchEvent(
+        new CustomEvent("basecoat:toast", {
+          detail: {
+            config: {
+              category: "success",
+              title: "Secret ID copied",
+              description: "Secret ID has been copied to clipboard",
+              cancel: {
+                label: "Close",
+              },
+            },
+          },
+        }),
+      );
+    } catch (err) {
+      document.dispatchEvent(
+        new CustomEvent("basecoat:toast", {
+          detail: {
+            config: {
+              category: "error",
+              title: "Failed to copy",
+              description: "Could not copy secret ID to clipboard",
+              cancel: {
+                label: "Dismiss",
+              },
+            },
+          },
+        }),
+      );
+    }
+  },
+
+  copyShareableUrl: async function() {
+    if (!this.row?.$id) return;
+    
+    const url = `http://almost-vault.appwrite.network/?id=${this.row.$id}`;
+    
+    try {
+      await navigator.clipboard.writeText(url);
+      document.dispatchEvent(
+        new CustomEvent("basecoat:toast", {
+          detail: {
+            config: {
+              category: "success",
+              title: "Shareable URL copied",
+              description: "URL has been copied to clipboard",
+              cancel: {
+                label: "Close",
+              },
+            },
+          },
+        }),
+      );
+    } catch (err) {
+      document.dispatchEvent(
+        new CustomEvent("basecoat:toast", {
+          detail: {
+            config: {
+              category: "error",
+              title: "Failed to copy",
+              description: "Could not copy URL to clipboard",
+              cancel: {
+                label: "Dismiss",
+              },
+            },
+          },
+        }),
+      );
+    }
+  },
+
+  createRow: async function() {
     if(this.creating) {
       return;
     }
@@ -41,7 +121,6 @@ Alpine.data("encrypt", () => ({
         new CustomEvent("basecoat:toast", {
           detail: {
             config: {
-              duration: 10000,
               category: "success",
               title: "Secret successfully created",
               description: 'ID: ' + this.row.$id,
