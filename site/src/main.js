@@ -86,7 +86,7 @@ Alpine.data("encrypt", () => ({
   copyShareableUrl: async function () {
     if (!this.row?.$id) return;
 
-    const url = `http://almost-vault.appwrite.network/?id=${this.row.$id}`;
+    const url = `https://almost-vault.appwrite.network/?id=${this.row.$id}`;
 
     try {
       await navigator.clipboard.writeText(url);
