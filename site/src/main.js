@@ -14,11 +14,26 @@ Alpine.data("tabs", () => ({
   tab: "encrypt",
 
   init() {
+    this.autoFocus();
+    this.$watch("tab", () => {
+      this.autoFocus();
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
     if (id && id.trim() !== "") {
       this.tab = "decrypt";
     }
+  },
+
+  autoFocus() {
+    Alpine.nextTick(() => {
+      if (this.tab === "encrypt") {
+        document.getElementById("secret")?.focus();
+      } else if (this.tab === "decrypt") {
+        document.getElementById("secret-id")?.focus();
+      }
+    }, 0);
   },
 }));
 
