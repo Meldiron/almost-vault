@@ -37,13 +37,13 @@
         </div>
       </div>
 
-      <div class="tabs w-full" id="demo-tabs-with-panels">
+      <div class="tabs w-full" id="encrypt-decrypt-tabs">
         <nav role="tablist" aria-orientation="horizontal" class="w-full">
           <button
             type="button"
             role="tab"
-            id="demo-tabs-with-panels-tab-1"
-            aria-controls="demo-tabs-with-panels-panel-1"
+            id="encrypt-tab"
+            aria-controls="encrypt-panel"
             aria-selected="true"
             tabindex="0"
           >
@@ -53,8 +53,8 @@
           <button
             type="button"
             role="tab"
-            id="demo-tabs-with-panels-tab-2"
-            aria-controls="demo-tabs-with-panels-panel-2"
+            id="decrypt-tab"
+            aria-controls="decrypt-panel"
             aria-selected="false"
             tabindex="0"
           >
@@ -65,8 +65,8 @@
         <div
           x-data="encrypt"
           role="tabpanel"
-          id="demo-tabs-with-panels-panel-1"
-          aria-labelledby="demo-tabs-with-panels-tab-1"
+          id="encrypt-panel"
+          aria-labelledby="encrypt-tab"
           tabindex="-1"
           aria-selected="true"
         >
@@ -159,8 +159,8 @@
 
         <div
           role="tabpanel"
-          id="demo-tabs-with-panels-panel-2"
-          aria-labelledby="demo-tabs-with-panels-tab-2"
+          id="decrypt-panel"
+          aria-labelledby="decrypt-tab"
           tabindex="-1"
           aria-selected="false"
           hidden
