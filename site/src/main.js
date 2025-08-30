@@ -11,15 +11,15 @@ const tables = new TablesDB(client);
 
 // Tabs functionality
 Alpine.data("tabs", () => ({
-    tab: "encrypt",
-    
-    init() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-        if (id && id.trim() !== '') {
-            this.tab = "decrypt";
-        }
+  tab: "encrypt",
+
+  init() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    if (id && id.trim() !== "") {
+      this.tab = "decrypt";
     }
+  },
 }));
 
 // Encrypt functionality
@@ -27,17 +27,13 @@ Alpine.data("encrypt", () => ({
   secret: "",
   ttl: "day",
   reads: 1,
-  
-   init() {
-     // TODO: Implement
-   },
 
   creating: false,
   row: null,
 
-  copySecretId: async function() {
+  copySecretId: async function () {
     if (!this.row?.$id) return;
-    
+
     try {
       await navigator.clipboard.writeText(this.row.$id);
       document.dispatchEvent(
@@ -72,11 +68,11 @@ Alpine.data("encrypt", () => ({
     }
   },
 
-  copyShareableUrl: async function() {
+  copyShareableUrl: async function () {
     if (!this.row?.$id) return;
-    
+
     const url = `http://almost-vault.appwrite.network/?id=${this.row.$id}`;
-    
+
     try {
       await navigator.clipboard.writeText(url);
       document.dispatchEvent(
@@ -111,32 +107,32 @@ Alpine.data("encrypt", () => ({
     }
   },
 
-  createRow: async function() {
-    if(this.creating) {
+  createRow: async function () {
+    if (this.creating) {
       return;
     }
-    
+
     this.creating = true;
-    
+
     try {
       this.row = await tables.createRow({
         databaseId: "main",
         tableId: "secrets",
-        rowId: 'sec_' + ID.unique(),
+        rowId: "sec_" + ID.unique(),
         data: {
           secret: this.secret,
           ttl: this.ttl,
           reads: +this.reads,
         },
       });
-      
+
       document.dispatchEvent(
         new CustomEvent("basecoat:toast", {
           detail: {
             config: {
               category: "success",
               title: "Secret successfully created",
-              description: 'ID: ' + this.row.$id,
+              description: "ID: " + this.row.$id,
               cancel: {
                 label: "Close",
               },
@@ -161,6 +157,50 @@ Alpine.data("encrypt", () => ({
       );
     } finally {
       this.creating = false;
+    }
+  },
+}));
+
+// Decrypt functionality
+Alpine.data("decrypt", () => ({
+  id: "",
+
+  init() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    if (id && id.trim() !== "") {
+      this.id = id;
+    }
+  },
+
+  reading: false,
+
+  getRow: async function () {
+    if (this.reading) {
+      return;
+    }
+
+    this.reading = true;
+
+    try {
+      throw new Error("TODO: Implement");
+    } catch (err) {
+      document.dispatchEvent(
+        new CustomEvent("basecoat:toast", {
+          detail: {
+            config: {
+              category: "error",
+              title: "Could not read the secret",
+              description: err.message ?? "Unknown error",
+              cancel: {
+                label: "Dismiss",
+              },
+            },
+          },
+        }),
+      );
+    } finally {
+      this.reading = false;
     }
   },
 }));

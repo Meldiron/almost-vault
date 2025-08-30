@@ -133,7 +133,7 @@
 
                 <footer>
                   <button
-                    x-bind:disabled="creating"
+                    x-bind:disabled="creating || !secret || !ttl || !reads"
                     type="submit"
                     class="btn w-full"
                   >
@@ -169,10 +169,16 @@
               </ol>
             </section>
             <footer class="flex sm:flex-row flex-col gap-2 items-center">
-              <button x-on:click="copyShareableUrl()" class="btn w-full sm:w-[fit-content]">
+              <button
+                x-on:click="copyShareableUrl()"
+                class="btn w-full sm:w-[fit-content]"
+              >
                 Copy sharable URL
               </button>
-              <button x-on:click="copySecretId()" class="btn-outline w-full sm:w-[fit-content]">
+              <button
+                x-on:click="copySecretId()"
+                class="btn-outline w-full sm:w-[fit-content]"
+              >
                 Copy secret ID
               </button>
             </footer>
@@ -180,6 +186,7 @@
         </div>
 
         <div
+          x-data="decrypt"
           role="tabpanel"
           id="decrypt-panel"
           aria-labelledby="decrypt-tab"
@@ -196,22 +203,27 @@
               </p>
             </header>
             <section>
-              <form class="form grid gap-6">
+              <form x-on:submit.prevent="getRow()" class="form grid gap-6">
                 <div class="grid gap-3">
                   <label for="secret-id">Secret ID</label>
                   <input
+                    x-model="id"
                     type="text"
                     placeholder="sec_68b2ad1e001..."
                     id="secret-id"
                   />
                 </div>
+                <footer>
+                  <button
+                    x-bind:disabled="reading || !id"
+                    type="submit"
+                    class="btn w-full"
+                  >
+                    Decrypt the secret
+                  </button>
+                </footer>
               </form>
             </section>
-            <footer>
-              <button type="button" class="btn w-full">
-                Decrypt the secret
-              </button>
-            </footer>
           </div>
         </div>
       </div>
