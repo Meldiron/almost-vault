@@ -9,6 +9,19 @@ const client = new Client()
   .setProject("almost-vault");
 const tables = new TablesDB(client);
 
+// Tabs functionality
+Alpine.data("tabs", () => ({
+    tab: "encrypt",
+    
+    init() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        if (id && id.trim() !== '') {
+            this.tab = "decrypt";
+        }
+    }
+}));
+
 // Encrypt functionality
 Alpine.data("encrypt", () => ({
   secret: "",

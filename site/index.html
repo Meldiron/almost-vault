@@ -37,14 +37,15 @@
         </div>
       </div>
 
-      <div class="tabs w-full" id="encrypt-decrypt-tabs">
+      <div x-data="tabs" class="tabs w-full" id="encrypt-decrypt-tabs">
         <nav role="tablist" aria-orientation="horizontal" class="w-full">
           <button
             type="button"
             role="tab"
             id="encrypt-tab"
             aria-controls="encrypt-panel"
-            aria-selected="true"
+            x-bind:aria-selected="tab === 'encrypt'"
+            x-on:click="tab = 'encrypt'"
             tabindex="0"
           >
             Encrypt
@@ -55,7 +56,8 @@
             role="tab"
             id="decrypt-tab"
             aria-controls="decrypt-panel"
-            aria-selected="false"
+            x-bind:aria-selected="tab === 'decrypt'"
+            x-on:click="tab = 'decrypt'"
             tabindex="0"
           >
             Decrypt
@@ -68,7 +70,8 @@
           id="encrypt-panel"
           aria-labelledby="encrypt-tab"
           tabindex="-1"
-          aria-selected="true"
+          x-bind:aria-selected="tab === 'encrypt'"
+          x-show="tab === 'encrypt'"
         >
           <div class="card">
             <header>
@@ -181,8 +184,8 @@
           id="decrypt-panel"
           aria-labelledby="decrypt-tab"
           tabindex="-1"
-          aria-selected="false"
-          hidden
+          x-bind:aria-selected="tab === 'decrypt'"
+          x-show="tab === 'decrypt'"
         >
           <div class="card">
             <header>
