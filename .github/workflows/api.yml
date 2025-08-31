@@ -21,6 +21,10 @@ jobs:
       working-directory: ./function
       run: npm ci
     
+    - name: Check function formatting
+      working-directory: ./function
+      run: npm run format:check
+    
     - name: Check function code quality
       working-directory: ./function
       run: npm run check

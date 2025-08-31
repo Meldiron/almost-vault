@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "appwrite run function --function-id=api",
     "format": "biome format --write ./src",
+    "format:check": "biome format --write=false ./src",
     "check": "biome lint --write ./src",
     "test": "find . -type f -name \"*.hurl\" | xargs hurl --test"
   },
