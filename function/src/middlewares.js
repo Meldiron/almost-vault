@@ -1,16 +1,14 @@
-import {MemoryAdapter} from "./adapters/memory.js";
-import {AppwriteAdapter} from "./adapters/appwrite.js";
+import { MemoryAdapter } from "./adapters/memory.js";
+import { AppwriteAdapter } from "./adapters/appwrite.js";
 
-export const createAdapterContext = (app) => {
+export const createAdapter = (ctx) => {
 	const adapter = process.env.ADAPTER || "memory";
 
 	switch (adapter) {
 		case "memory":
-			app.context.adapter = new MemoryAdapter();
-			break;
+			return new MemoryAdapter();
 		case "appwrite":
-			app.context.adapter = new AppwriteAdapter();
-			break;
+			return new AppwriteAdapter(ctx.request.header["x-appwrite-key"] ?? "");
 		default:
 			throw new Error(`Unsupported adapter: ${adapter}`);
 	}

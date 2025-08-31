@@ -1,17 +1,30 @@
-import { Client, TablesDB } from "node-appwrite";
+import { Client, TablesDB, ID } from "node-appwrite";
 import { Adapter } from "./adapter.js";
 
 export class AppwriteAdapter extends Adapter {
 	client;
 	tables;
 
-	constructor() {
+	constructor(apiKey) {
 		super();
 
 		this.client = new Client()
 			.setEndpoint(process.env.APPWRITE_FUNCTION_API_ENDPOINT)
 			.setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-			.setKey(req.headers["x-appwrite-key"] ?? "");
+			.setKey(apiKey);
 		this.tables = new TablesDB(this.client);
+	}
+
+	async createSecret(secret, ttl, reads) {
+		return await this.tables.createRow({
+			databaseId: "main",
+			tableId: "secrets",
+			rowId: `sec_${ID.unique()}`,
+			data: {
+				secret,
+				ttl,
+				reads,
+			},
+		});
 	}
 }
