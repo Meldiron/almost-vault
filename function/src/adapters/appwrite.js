@@ -27,7 +27,7 @@ export class AppwriteAdapter extends Adapter {
 			},
 		});
 	}
-	
+
 	async getSecret(id) {
 		return await this.tables.getRow({
 			databaseId: "main",

@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "appwrite run function --function-id=api",
     "format": "biome format --write ./src",
-    "lint": "biome lint --write ./src",
     "check": "biome lint --write ./src"
   },
   "dependencies": {

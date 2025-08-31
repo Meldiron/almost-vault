@@ -25,14 +25,14 @@ export class MemoryAdapter extends Adapter {
 
 		return row;
 	}
-	
+
 	async getSecret(id) {
-    const row = store.rows.find((row) => row.$id === id);
-    
-    if(!row) {
-      throw new Error("Secret not found");
-    }
-    
-    return row;
+		const row = store.rows.find((row) => row.$id === id);
+
+		if (!row) {
+			throw new Error("Secret not found");
+		}
+
+		return row;
 	}
 }
