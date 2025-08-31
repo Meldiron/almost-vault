@@ -22,7 +22,7 @@ export const createCryptographyCiphertext = async (ctx) => {
 
 	try {
 		const row = await adapter.createSecret(body.secret, body.ttl, body.reads);
-		ctx.status = 200;
+		ctx.status = 201;
 		ctx.body = row;
 		return;
 	} catch (err) {

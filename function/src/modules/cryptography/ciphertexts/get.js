@@ -24,7 +24,7 @@ export const getCryptographyCiphertext = async (ctx) => {
 	try {
 		row = await adapter.getSecret(payload.cipherTextId);
 	} catch (err) {
-		ctx.status = 400;
+		ctx.status = err.code ? err.code : 404;
 		ctx.body = err.message;
 		return;
 	}

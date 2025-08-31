@@ -131,3 +131,6 @@ dist
 
 # Directory used by Appwrite CLI for local development
 .appwrite
+
+# MacOS temporary files
+.DS_Store

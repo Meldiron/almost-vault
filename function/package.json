@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "appwrite run function --function-id=api",
     "format": "biome format --write ./src",
-    "check": "biome lint --write ./src"
+    "check": "biome lint --write ./src",
+    "test": "find . -type f -name \"*.hurl\" | xargs hurl --test"
   },
   "dependencies": {
     "@koa/bodyparser": "^6.0.0",
@@ -18,6 +19,7 @@
     "zod": "^4.1.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2"
+    "@biomejs/biome": "2.2.2",
+    "@orangeopensource/hurl": "^7.0.0"
   }
 }

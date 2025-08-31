@@ -1,36 +1,8 @@
-import Koa from "koa";
 import Axios from "axios";
-import Router from "@koa/router";
-import { bodyParser } from "@koa/bodyparser";
-import { getCryptographyCiphertext } from "./modules/cryptography/ciphertexts/get.js";
-import { createCryptographyCiphertext } from "./modules/cryptography/ciphertexts/create.js";
 
-// Koa.js setup
-const app = new Koa();
-app.use(bodyParser());
+import { isReady, setupServer } from "./http.js";
 
-// Cryptography API
-const router = new Router();
-router.get("/cryptography/ciphertexts/:id", getCryptographyCiphertext);
-router.post("/cryptography/ciphertexts", createCryptographyCiphertext);
-
-app.use(router.routes()).use(router.allowedMethods());
-
-app.use((ctx) => {
-	ctx.status = 404;
-	ctx.body = "404 Not found";
-});
-
-app.on("error", (err, ctx) => {
-	console.log(err);
-	ctx.status = 500;
-	ctx.body = "Internal Server Error";
-});
-
-let isReady = false;
-app.listen(4000, "0.0.0.0", undefined, () => {
-	isReady = true;
-});
+setupServer();
 
 async function onceReady() {
 	if (isReady) return;
