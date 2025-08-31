@@ -33,7 +33,7 @@ export default async (context) => {
 
 	const res = await Axios({
 		method: context.req.method,
-		url: "http://127.0.0.1:4000" + (context.req.path ? context.req.path : "/"),
+		url: `http://127.0.0.1:4000${context.req.path ? context.req.path : "/"}`,
 		headers: context.req.headers,
 	});
 

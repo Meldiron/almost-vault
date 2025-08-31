@@ -1,1 +1,1 @@
-export const createCryptographyCiphertext = async (ctx) => {};
+export const createCryptographyCiphertext = async (_ctx) => {};

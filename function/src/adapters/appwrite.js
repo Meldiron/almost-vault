@@ -6,12 +6,12 @@ export class AppwriteAdapter extends Adapter {
 	database;
 
 	constructor() {
+		super();
+
 		this.client = new Client()
 			.setEndpoint(process.env.APPWRITE_FUNCTION_API_ENDPOINT)
 			.setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
 			.setKey(req.headers["x-appwrite-key"] ?? "");
 		this.database = new Database(this.client);
-
-		super();
 	}
 }
