@@ -1,17 +1,16 @@
 import { Adapter } from "./adapter.js";
 
-export class MemoryAdapter extends Adapter {
-	store = {
-		rows: [],
-	};
-	sequence = 0;
+// Global objects, persists between requests
+let sequence = 0;
+const store = { rows: [] };
 
+export class MemoryAdapter extends Adapter {
 	async createSecret(secret, ttl, reads) {
-		this.sequence++;
+		sequence++;
 
 		const row = {
 			$id: `sec_${Math.random().toString(16).substring(2, 15)}`,
-			$sequence: this.sequence,
+			$sequence: sequence,
 			$permissions: [],
 			$databaseId: "main",
 			$tableId: "secrets",
@@ -22,8 +21,18 @@ export class MemoryAdapter extends Adapter {
 			reads,
 		};
 
-		this.store.rows.push(row);
+		store.rows.push(row);
 
 		return row;
+	}
+	
+	async getSecret(id) {
+    const row = store.rows.find((row) => row.$id === id);
+    
+    if(!row) {
+      throw new Error("Secret not found");
+    }
+    
+    return row;
 	}
 }
