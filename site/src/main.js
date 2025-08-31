@@ -220,6 +220,26 @@ Alpine.data("decrypt", () => ({
   },
 }));
 
+// Simple button alert functionality
+Alpine.data("articleAlert", () => ({
+  showAlert() {
+    document.dispatchEvent(
+      new CustomEvent("basecoat:toast", {
+        detail: {
+          config: {
+            category: "info",
+            title: "Article coming soon",
+            description: "I promise I won't forget. Not this time.",
+            cancel: {
+              label: "Close",
+            },
+          },
+        },
+      }),
+    );
+  },
+}));
+
 // Alpine.js core initialization
 window.Alpine = Alpine;
 Alpine.start();

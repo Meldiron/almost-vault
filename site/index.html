@@ -59,16 +59,17 @@
           Quickly share passwords and secrets.<br />Secure, modern, simple.
         </p>
 
-        <div class="flex justify-center mt-4 gap-4">
-          <a
-            class="text-center underline text-neutral-500"
-            href="#"
+        <div class="flex justify-center mt-4 gap-4" x-data="articleAlert">
+          <button
+            x-on:click="showAlert()"
+            class="hover:text-white cursor-pointer text-center underline text-neutral-500"
             target="_blank"
-            >Case study</a
           >
+            Article
+          </button>
 
           <a
-            class="text-center underline text-neutral-500"
+            class="hover:text-white text-center underline text-neutral-500"
             href="https://github.com/Meldiron/almost-vault"
             target="_blank"
             >GitHub</a
