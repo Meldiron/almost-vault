@@ -1,6 +1,6 @@
 name: Site function
 
-on: [pull_request]
+on: [push]
 
 jobs:
   test:
