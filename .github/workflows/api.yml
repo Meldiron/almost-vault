@@ -16,6 +16,9 @@ jobs:
         node-version: '22'
         cache: 'npm'
         cache-dependency-path: function/package-lock.json
+        
+    - name: Change directory
+      run: cd function
     
     - name: Install dependencies
       working-directory: ./function

@@ -1,4 +1,4 @@
-name: Site function
+name: Site
 
 on: [push]
 
@@ -16,6 +16,9 @@ jobs:
         node-version: '22'
         cache: 'npm'
         cache-dependency-path: site/package-lock.json
+        
+    - name: Change directory
+      run: cd site
     
     - name: Install dependencies
       working-directory: ./site
