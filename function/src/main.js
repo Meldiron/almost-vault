@@ -34,10 +34,11 @@ export default async (context) => {
   const res = await Axios({
     method: context.req.method,
     url: 'http://127.0.0.1:4000' + (context.req.path ? context.req.path : '/'),
-    headers: context.req.headers
+    headers: context.req.headers,
   });
 
-  const body = typeof res.data === 'string' ? res.data : JSON.stringify(res.data);
+  const body =
+    typeof res.data === 'string' ? res.data : JSON.stringify(res.data);
   const headers = res.headers;
   const code = res.status;
 

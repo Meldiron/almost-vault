@@ -1,7 +1,7 @@
 export const adapterMiddleware = (app) => {
   const adapter = process.env.ADAPTER || 'memory';
-  
-  switch(adapter) {
+
+  switch (adapter) {
     case 'memory':
       app.context.adapter = new MemoryAdapter();
       break;
@@ -11,4 +11,4 @@ export const adapterMiddleware = (app) => {
     default:
       throw new Error(`Unsupported adapter: ${adapter}`);
   }
-}
+};

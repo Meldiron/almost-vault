@@ -1,2 +1,1 @@
-export const getCryptographyCiphertext = async (ctx) => {
-};
+export const getCryptographyCiphertext = async (ctx) => {};

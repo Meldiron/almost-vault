@@ -1,3 +1,1 @@
-export class Adapter {
-
-}
+export class Adapter {}
