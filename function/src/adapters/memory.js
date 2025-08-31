@@ -1,13 +1,13 @@
-import { Adapter } from './adapter';
+import { Adapter } from "./adapter";
 
 export class AppwriteAdapter extends Adapter {
-  store;
+	store;
 
-  constructor() {
-    this.store = {
-      rows: [],
-    };
+	constructor() {
+		this.store = {
+			rows: [],
+		};
 
-    super();
-  }
+		super();
+	}
 }
