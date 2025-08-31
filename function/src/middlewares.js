@@ -1,4 +1,7 @@
-export const adapterMiddleware = (app) => {
+import {MemoryAdapter} from "./adapters/memory.js";
+import {AppwriteAdapter} from "./adapters/appwrite.js";
+
+export const createAdapterContext = (app) => {
 	const adapter = process.env.ADAPTER || "memory";
 
 	switch (adapter) {

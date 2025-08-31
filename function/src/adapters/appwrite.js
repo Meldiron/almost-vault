@@ -1,9 +1,9 @@
-import { Client, Database } from "node-appwrite";
-import { Adapter } from "./adapter";
+import { Client, TablesDB } from "node-appwrite";
+import { Adapter } from "./adapter.js";
 
 export class AppwriteAdapter extends Adapter {
 	client;
-	database;
+	tables;
 
 	constructor() {
 		super();
@@ -12,6 +12,6 @@ export class AppwriteAdapter extends Adapter {
 			.setEndpoint(process.env.APPWRITE_FUNCTION_API_ENDPOINT)
 			.setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
 			.setKey(req.headers["x-appwrite-key"] ?? "");
-		this.database = new Database(this.client);
+		this.tables = new TablesDB(this.client);
 	}
 }

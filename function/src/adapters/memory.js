@@ -1,6 +1,6 @@
-import { Adapter } from "./adapter";
+import { Adapter } from "./adapter.js";
 
-export class AppwriteAdapter extends Adapter {
+export class MemoryAdapter extends Adapter {
 	store;
 
 	constructor() {
