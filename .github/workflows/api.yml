@@ -1,0 +1,47 @@
+name: API function
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        cache-dependency-path: function/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./function
+      run: npm ci
+    
+    - name: Check function code quality
+      working-directory: ./function
+      run: npm run check
+    
+    - name: Start function server in background
+      working-directory: ./function
+      run: |
+        CI=true node src/http.js &
+        echo $! > server.pid
+        # Wait a moment for server to start
+        sleep 5
+    
+    - name: Run function tests
+      working-directory: ./function
+      run: npm run test
+    
+    - name: Stop function server
+      working-directory: ./function
+      run: |
+        if [ -f server.pid ]; then
+          kill $(cat server.pid) || true
+          rm server.pid
+        fi
+      if: always()

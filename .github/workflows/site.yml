@@ -1,0 +1,26 @@
+name: Site function
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        cache-dependency-path: site/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./site
+      run: npm ci
+    
+    - name: Build Vite site
+      working-directory: ./site
+      run: npm run build
