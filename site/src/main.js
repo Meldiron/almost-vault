@@ -1,46 +1,46 @@
-import "./style.css";
-import "basecoat-css/all";
-import Alpine from "alpinejs";
-import { Client, ID, TablesDB } from "appwrite";
+import './style.css';
+import 'basecoat-css/all';
+import Alpine from 'alpinejs';
+import { Client, ID, TablesDB } from 'appwrite';
 
 // Appwrite SDK initialization
 const client = new Client()
-  .setEndpoint("https://fra.cloud.appwrite.io/v1")
-  .setProject("almost-vault");
+  .setEndpoint('https://fra.cloud.appwrite.io/v1')
+  .setProject('almost-vault');
 const tables = new TablesDB(client);
 
 // Tabs functionality
-Alpine.data("tabs", () => ({
-  tab: "encrypt",
+Alpine.data('tabs', () => ({
+  tab: 'encrypt',
 
   init() {
     this.autoFocus();
-    this.$watch("tab", () => {
+    this.$watch('tab', () => {
       this.autoFocus();
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    if (id && id.trim() !== "") {
-      this.tab = "decrypt";
+    const id = urlParams.get('id');
+    if (id && id.trim() !== '') {
+      this.tab = 'decrypt';
     }
   },
 
   autoFocus() {
     Alpine.nextTick(() => {
-      if (this.tab === "encrypt") {
-        document.getElementById("secret")?.focus();
-      } else if (this.tab === "decrypt") {
-        document.getElementById("secret-id")?.focus();
+      if (this.tab === 'encrypt') {
+        document.getElementById('secret')?.focus();
+      } else if (this.tab === 'decrypt') {
+        document.getElementById('secret-id')?.focus();
       }
     }, 0);
   },
 }));
 
 // Encrypt functionality
-Alpine.data("encrypt", () => ({
-  secret: "",
-  ttl: "day",
+Alpine.data('encrypt', () => ({
+  secret: '',
+  ttl: 'day',
   reads: 1,
 
   creating: false,
@@ -52,33 +52,33 @@ Alpine.data("encrypt", () => ({
     try {
       await navigator.clipboard.writeText(this.row.$id);
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "success",
-              title: "Secret ID copied",
-              description: "Secret ID has been copied to clipboard",
+              category: 'success',
+              title: 'Secret ID copied',
+              description: 'Secret ID has been copied to clipboard',
               cancel: {
-                label: "Close",
+                label: 'Close',
               },
             },
           },
-        }),
+        })
       );
     } catch (err) {
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "error",
-              title: "Failed to copy",
-              description: "Could not copy secret ID to clipboard",
+              category: 'error',
+              title: 'Failed to copy',
+              description: 'Could not copy secret ID to clipboard',
               cancel: {
-                label: "Dismiss",
+                label: 'Dismiss',
               },
             },
           },
-        }),
+        })
       );
     }
   },
@@ -91,33 +91,33 @@ Alpine.data("encrypt", () => ({
     try {
       await navigator.clipboard.writeText(url);
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "success",
-              title: "Shareable URL copied",
-              description: "URL has been copied to clipboard",
+              category: 'success',
+              title: 'Shareable URL copied',
+              description: 'URL has been copied to clipboard',
               cancel: {
-                label: "Close",
+                label: 'Close',
               },
             },
           },
-        }),
+        })
       );
     } catch (err) {
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "error",
-              title: "Failed to copy",
-              description: "Could not copy URL to clipboard",
+              category: 'error',
+              title: 'Failed to copy',
+              description: 'Could not copy URL to clipboard',
               cancel: {
-                label: "Dismiss",
+                label: 'Dismiss',
               },
             },
           },
-        }),
+        })
       );
     }
   },
@@ -131,9 +131,9 @@ Alpine.data("encrypt", () => ({
 
     try {
       this.row = await tables.createRow({
-        databaseId: "main",
-        tableId: "secrets",
-        rowId: "sec_" + ID.unique(),
+        databaseId: 'main',
+        tableId: 'secrets',
+        rowId: 'sec_' + ID.unique(),
         data: {
           secret: this.secret,
           ttl: this.ttl,
@@ -142,33 +142,33 @@ Alpine.data("encrypt", () => ({
       });
 
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "success",
-              title: "Secret successfully created",
-              description: "ID: " + this.row.$id,
+              category: 'success',
+              title: 'Secret successfully created',
+              description: 'ID: ' + this.row.$id,
               cancel: {
-                label: "Close",
+                label: 'Close',
               },
             },
           },
-        }),
+        })
       );
     } catch (err) {
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "error",
-              title: "Could not store your secret",
-              description: err.message ?? "Unknown error",
+              category: 'error',
+              title: 'Could not store your secret',
+              description: err.message ?? 'Unknown error',
               cancel: {
-                label: "Dismiss",
+                label: 'Dismiss',
               },
             },
           },
-        }),
+        })
       );
     } finally {
       this.creating = false;
@@ -177,13 +177,13 @@ Alpine.data("encrypt", () => ({
 }));
 
 // Decrypt functionality
-Alpine.data("decrypt", () => ({
-  id: "",
+Alpine.data('decrypt', () => ({
+  id: '',
 
   init() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    if (id && id.trim() !== "") {
+    const id = urlParams.get('id');
+    if (id && id.trim() !== '') {
       this.id = id;
     }
   },
@@ -198,21 +198,21 @@ Alpine.data("decrypt", () => ({
     this.reading = true;
 
     try {
-      throw new Error("TODO: Implement");
+      throw new Error('TODO: Implement');
     } catch (err) {
       document.dispatchEvent(
-        new CustomEvent("basecoat:toast", {
+        new CustomEvent('basecoat:toast', {
           detail: {
             config: {
-              category: "error",
-              title: "Could not read the secret",
-              description: err.message ?? "Unknown error",
+              category: 'error',
+              title: 'Could not read the secret',
+              description: err.message ?? 'Unknown error',
               cancel: {
-                label: "Dismiss",
+                label: 'Dismiss',
               },
             },
           },
-        }),
+        })
       );
     } finally {
       this.reading = false;
@@ -221,21 +221,21 @@ Alpine.data("decrypt", () => ({
 }));
 
 // Simple button alert functionality
-Alpine.data("articleAlert", () => ({
+Alpine.data('articleAlert', () => ({
   showAlert() {
     document.dispatchEvent(
-      new CustomEvent("basecoat:toast", {
+      new CustomEvent('basecoat:toast', {
         detail: {
           config: {
-            category: "info",
-            title: "Article coming soon",
+            category: 'info',
+            title: 'Article coming soon',
             description: "I promise I won't forget. Not this time.",
             cancel: {
-              label: "Close",
+              label: 'Close',
             },
           },
         },
-      }),
+      })
     );
   },
 }));
@@ -246,16 +246,16 @@ Alpine.start();
 
 // Accordion functionality
 (() => {
-  const accordions = document.querySelectorAll(".accordion");
-  accordions.forEach((accordion) => {
-    accordion.addEventListener("click", (event) => {
-      const summary = event.target.closest("summary");
+  const accordions = document.querySelectorAll('.accordion');
+  accordions.forEach(accordion => {
+    accordion.addEventListener('click', event => {
+      const summary = event.target.closest('summary');
       if (!summary) return;
-      const details = summary.closest("details");
+      const details = summary.closest('details');
       if (!details) return;
-      accordion.querySelectorAll("details").forEach((detailsEl) => {
+      accordion.querySelectorAll('details').forEach(detailsEl => {
         if (detailsEl !== details) {
-          detailsEl.removeAttribute("open");
+          detailsEl.removeAttribute('open');
         }
       });
     });

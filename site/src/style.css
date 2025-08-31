@@ -1,8 +1,8 @@
-@import "tailwindcss";
-@import "basecoat-css";
+@import 'tailwindcss';
+@import 'basecoat-css';
 
 .toaster {
-    @media (width >= 40rem) {
-        max-width: 400px;
-    }
+  @media (width >= 40rem) {
+    max-width: 400px;
+  }
 }
