@@ -1,3 +1,18 @@
+![Almost Vault Cover](site/public/og.png)
+
+<p align="center">
+  <img src="site/public/icon.png" alt="Almost Vault Logo" width="100" height="100">
+</p>
+
+<p align="center">
+  <a href="https://github.com/Meldiron/almost-vault/actions/workflows/api.yml">
+    <img src="https://github.com/Meldiron/almost-vault/workflows/API%20function/badge.svg" alt="API function CI">
+  </a>
+  <a href="https://github.com/Meldiron/almost-vault/actions/workflows/site.yml">
+    <img src="https://github.com/Meldiron/almost-vault/workflows/Site/badge.svg" alt="Site CI">
+  </a>
+</p>
+
 # Almost Vault
 
 A secure, ephemeral secret-sharing application built with Appwrite. Share sensitive information with confidence using time-limited, read-restricted encrypted secrets.
