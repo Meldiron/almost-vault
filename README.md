@@ -52,7 +52,7 @@ A secure, ephemeral secret-sharing application built with Appwrite. Share sensit
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Meldiron/almost-vault.git
 cd almost-vault
 ```
 
