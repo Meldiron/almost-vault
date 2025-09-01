@@ -90,9 +90,7 @@
     "tables": [
         {
             "$id": "secrets",
-            "$permissions": [
-                "create(\"any\")"
-            ],
+            "$permissions": [],
             "databaseId": "main",
             "name": "secrets",
             "enabled": true,

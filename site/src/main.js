@@ -49,77 +49,41 @@ Alpine.data('encrypt', () => ({
   copySecretId: async function () {
     if (!this.row?.$id) return;
 
-    try {
-      await navigator.clipboard.writeText(this.row.$id);
-      document.dispatchEvent(
-        new CustomEvent('basecoat:toast', {
-          detail: {
-            config: {
-              category: 'success',
-              title: 'Secret ID copied',
-              description: 'Secret ID has been copied to clipboard',
-              cancel: {
-                label: 'Close',
-              },
+    await navigator.clipboard.writeText(this.row.$id);
+    document.dispatchEvent(
+      new CustomEvent('basecoat:toast', {
+        detail: {
+          config: {
+            category: 'success',
+            title: 'Secret ID copied to clipboard',
+            cancel: {
+              label: 'Close',
             },
           },
-        })
-      );
-    } catch (err) {
-      document.dispatchEvent(
-        new CustomEvent('basecoat:toast', {
-          detail: {
-            config: {
-              category: 'error',
-              title: 'Failed to copy',
-              description: 'Could not copy secret ID to clipboard',
-              cancel: {
-                label: 'Dismiss',
-              },
-            },
-          },
-        })
-      );
-    }
+        },
+      })
+    );
   },
 
   copyShareableUrl: async function () {
     if (!this.row?.$id) return;
 
-    const url = `https://almost-vault.appwrite.network/?id=${this.row.$id}`;
+    const url = window.location.origin + `/?id=${this.row.$id}`;
 
-    try {
-      await navigator.clipboard.writeText(url);
-      document.dispatchEvent(
-        new CustomEvent('basecoat:toast', {
-          detail: {
-            config: {
-              category: 'success',
-              title: 'Shareable URL copied',
-              description: 'URL has been copied to clipboard',
-              cancel: {
-                label: 'Close',
-              },
+    await navigator.clipboard.writeText(url);
+    document.dispatchEvent(
+      new CustomEvent('basecoat:toast', {
+        detail: {
+          config: {
+            category: 'success',
+            title: 'Shareable URL copied to clipboard',
+            cancel: {
+              label: 'Close',
             },
           },
-        })
-      );
-    } catch (err) {
-      document.dispatchEvent(
-        new CustomEvent('basecoat:toast', {
-          detail: {
-            config: {
-              category: 'error',
-              title: 'Failed to copy',
-              description: 'Could not copy URL to clipboard',
-              cancel: {
-                label: 'Dismiss',
-              },
-            },
-          },
-        })
-      );
-    }
+        },
+      })
+    );
   },
 
   createRow: async function () {
@@ -130,31 +94,44 @@ Alpine.data('encrypt', () => ({
     this.creating = true;
 
     try {
-      this.row = await tables.createRow({
-        databaseId: 'main',
-        tableId: 'secrets',
-        rowId: 'sec_' + ID.unique(),
-        data: {
-          secret: this.secret,
-          ttl: this.ttl,
-          reads: +this.reads,
-        },
-      });
+      const apiEndpoint =
+        import.meta.env.VITE_API || 'https://almost-vault-api.fra.appwrite.run';
+      const response = await fetch(
+        `${apiEndpoint}/v1/cryptography/ciphertexts`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            ttl: this.ttl,
+            secret: this.secret,
+            reads: +this.reads,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      document.dispatchEvent(
-        new CustomEvent('basecoat:toast', {
-          detail: {
-            config: {
-              category: 'success',
-              title: 'Secret successfully created',
-              description: 'ID: ' + this.row.$id,
-              cancel: {
-                label: 'Close',
+      if (response.status === 201) {
+        const data = await response.json();
+        this.row = data;
+
+        document.dispatchEvent(
+          new CustomEvent('basecoat:toast', {
+            detail: {
+              config: {
+                category: 'success',
+                title: 'Secret successfully created',
+                description: 'ID: ' + this.row.$id,
+                cancel: {
+                  label: 'Close',
+                },
               },
             },
-          },
-        })
-      );
+          })
+        );
+      } else {
+        throw new Error(await response.text());
+      }
     } catch (err) {
       document.dispatchEvent(
         new CustomEvent('basecoat:toast', {
@@ -179,6 +156,7 @@ Alpine.data('encrypt', () => ({
 // Decrypt functionality
 Alpine.data('decrypt', () => ({
   id: '',
+  secret: null,
 
   init() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -190,6 +168,10 @@ Alpine.data('decrypt', () => ({
 
   reading: false,
 
+  forgetSecret() {
+    this.secret = null;
+  },
+
   getRow: async function () {
     if (this.reading) {
       return;
@@ -198,7 +180,38 @@ Alpine.data('decrypt', () => ({
     this.reading = true;
 
     try {
-      throw new Error('TODO: Implement');
+      const apiEndpoint =
+        import.meta.env.VITE_API || 'https://almost-vault-api.fra.appwrite.run';
+      const response = await fetch(
+        `${apiEndpoint}/v1/cryptography/ciphertexts/${this.id}`,
+        {
+          method: 'GET',
+        }
+      );
+
+      if (response.status === 200) {
+        const data = await response.json();
+        this.secret = data;
+
+        window.history.replaceState(null, '', window.location.pathname);
+        this.id = '';
+
+        document.dispatchEvent(
+          new CustomEvent('basecoat:toast', {
+            detail: {
+              config: {
+                category: 'success',
+                title: 'Secret successfully decrypted',
+                cancel: {
+                  label: 'Close',
+                },
+              },
+            },
+          })
+        );
+      } else {
+        throw new Error(await response.text());
+      }
     } catch (err) {
       document.dispatchEvent(
         new CustomEvent('basecoat:toast', {

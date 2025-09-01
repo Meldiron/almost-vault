@@ -113,6 +113,47 @@
           x-bind:aria-selected="tab === 'encrypt'"
           x-show="tab === 'encrypt'"
         >
+          <template x-if="row">
+            <div
+              class="card bg-green-950/[var(--bg-opacity)] [--bg-opacity:50%] border-green-900 mt-4"
+            >
+              <header>
+                <h2>Your encrypted secret was successfully created</h2>
+                <p>Share your secret with anyone in the world.</p>
+              </header>
+              <section class="text-sm">
+                <p>Summary:</p>
+                <ol class="mt-4 flex list-decimal flex-col gap-2 pl-6">
+                  <li>
+                    Your secret can be read
+                    <b
+                      x-text="row.reads + (row.reads === 1 ? ' time' : ' times')"
+                    ></b>
+                  </li>
+                  <li>
+                    Secret is available for
+                    <b>1 <span x-text="row.ttl"></span></b>
+                  </li>
+                  <li>Secret value is <b>securely encrypted</b></li>
+                </ol>
+              </section>
+              <footer class="flex sm:flex-row flex-col gap-2 items-center">
+                <button
+                  x-on:click="copyShareableUrl()"
+                  class="btn w-full sm:w-[fit-content]"
+                >
+                  Copy sharable URL
+                </button>
+                <button
+                  x-on:click="copySecretId()"
+                  class="btn-outline w-full sm:w-[fit-content]"
+                >
+                  Copy secret ID
+                </button>
+              </footer>
+            </div>
+          </template>
+
           <div class="card">
             <header>
               <h2>Encrypt</h2>
@@ -182,46 +223,6 @@
               </form>
             </section>
           </div>
-
-          <div
-            x-show="row"
-            class="card bg-green-950/[var(--bg-opacity)] [--bg-opacity:50%] border-green-900 mt-4"
-          >
-            <header>
-              <h2>Your encrypted secret was successfully created</h2>
-              <p>Share your secret with anyone in the world.</p>
-            </header>
-            <section class="text-sm">
-              <p>Summary:</p>
-              <ol class="mt-4 flex list-decimal flex-col gap-2 pl-6">
-                <li>
-                  Your secret can be read
-                  <b
-                    x-text="row.reads + (row.reads === 1 ? ' time' : ' times')"
-                  ></b>
-                </li>
-                <li>
-                  Secret is available for
-                  <b>1 <span x-text="row.ttl"></span></b>
-                </li>
-                <li>Secret value is <b>securely encrypted</b></li>
-              </ol>
-            </section>
-            <footer class="flex sm:flex-row flex-col gap-2 items-center">
-              <button
-                x-on:click="copyShareableUrl()"
-                class="btn w-full sm:w-[fit-content]"
-              >
-                Copy sharable URL
-              </button>
-              <button
-                x-on:click="copySecretId()"
-                class="btn-outline w-full sm:w-[fit-content]"
-              >
-                Copy secret ID
-              </button>
-            </footer>
-          </div>
         </div>
 
         <div
@@ -241,28 +242,51 @@
                 secret.
               </p>
             </header>
-            <section>
-              <form x-on:submit.prevent="getRow()" class="form grid gap-6">
+            <template x-if="!secret">
+              <section>
+                <form x-on:submit.prevent="getRow()" class="form grid gap-6">
+                  <div class="grid gap-3">
+                    <label for="secret-id">Secret ID</label>
+                    <input
+                      x-model="id"
+                      type="text"
+                      placeholder="sec_68b2ad1e001..."
+                      id="secret-id"
+                    />
+                  </div>
+                  <footer>
+                    <button
+                      x-bind:disabled="reading || !id"
+                      type="submit"
+                      class="btn w-full"
+                    >
+                      Decrypt the secret
+                    </button>
+                  </footer>
+                </form>
+              </section>
+            </template>
+            <template x-if="secret">
+              <section>
                 <div class="grid gap-3">
-                  <label for="secret-id">Secret ID</label>
-                  <input
-                    x-model="id"
-                    type="text"
-                    placeholder="sec_68b2ad1e001..."
-                    id="secret-id"
-                  />
+                  <label for="secret-decrypted">Secret</label>
+                  <textarea
+                    readonly="readonly"
+                    x-bind:value="secret.secret"
+                    id="secret-decrypted"
+                    class="textarea h-32"
+                    placeholder=""
+                  ></textarea>
                 </div>
-                <footer>
-                  <button
-                    x-bind:disabled="reading || !id"
-                    type="submit"
-                    class="btn w-full"
-                  >
-                    Decrypt the secret
-                  </button>
-                </footer>
-              </form>
-            </section>
+                <button
+                  x-on:click="forgetSecret()"
+                  type="button"
+                  class="btn-ghost w-full mt-6"
+                >
+                  Decrypt another secret
+                </button>
+              </section>
+            </template>
           </div>
         </div>
       </div>

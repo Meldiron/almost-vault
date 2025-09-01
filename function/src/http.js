@@ -4,6 +4,7 @@ import { bodyParser } from "@koa/bodyparser";
 import { getCryptographyCiphertext } from "./modules/cryptography/ciphertexts/get.js";
 import { createCryptographyCiphertext } from "./modules/cryptography/ciphertexts/create.js";
 import { getHealth } from "./modules/health/get.js";
+import cors from "@koa/cors";
 
 export let isReady = false;
 
@@ -11,6 +12,22 @@ export function setupServer() {
 	// Koa.js setup
 	const app = new Koa();
 	app.use(bodyParser());
+	app.use(
+		cors({
+			origin: (ctx) => {
+				const origin = ctx.get("Origin");
+				const originWithoutPort = origin.replace(/:\d+$/, "");
+
+				const isLocalhost = originWithoutPort.endsWith("localhost");
+				const isProducton = origin === "https://almost-vault.appwrite.network";
+
+				if (isLocalhost || isProducton) {
+					return origin;
+				}
+				return "";
+			},
+		}),
+	);
 
 	const router = new Router();
 
