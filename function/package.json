@@ -9,7 +9,7 @@
     "format": "biome format --write ./src",
     "format:check": "biome format ./src",
     "check": "biome lint --write ./src",
-    "test": "find . -type f -name \"*.hurl\" | xargs hurl --test"
+    "test": "hurl --test ."
   },
   "dependencies": {
     "@koa/bodyparser": "^6.0.0",
