@@ -38,6 +38,17 @@ export class AppwriteAdapter extends Adapter {
 		});
 	}
 
+	async decreaseSecretReads(id) {
+		return await this.tables.decrementRowColumn({
+			databaseId: "main",
+			tableId: "secrets",
+			rowId: id,
+			column: "reads",
+			value: 1,
+			min: 1,
+		});
+	}
+
 	async ping() {
 		try {
 			const response = await this.health.get();

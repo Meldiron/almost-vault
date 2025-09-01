@@ -36,6 +36,22 @@ export class MemoryAdapter extends Adapter {
 		return row;
 	}
 
+	async decreaseSecretReads(id) {
+		const row = store.rows.find((row) => row.$id === id);
+
+		if (!row) {
+			throw new Error("Secret not found");
+		}
+
+		if (row.reads < 1) {
+			throw new Error("Secret has no reads left");
+		}
+
+		row.reads -= 1;
+
+		return row;
+	}
+
 	async ping() {
 		return "pass";
 	}

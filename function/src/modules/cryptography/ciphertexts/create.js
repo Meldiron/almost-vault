@@ -4,7 +4,9 @@ import { createAdapter } from "../../../middlewares.js";
 const Body = z.object({
 	secret: z.string().min(1).max(2048),
 	reads: z.number().min(1).max(1000),
-	ttl: z.enum(["hour", "day", "week", "month", "year"]),
+	ttl: z.enum(["hour", "day", "week", "month", "year", "mock"]),
+	// "mock" is 5 seconds for testing purposes.
+	// Allowed on production too, because no harm in using it.
 });
 
 export const createCryptographyCiphertext = async (ctx) => {
