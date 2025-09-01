@@ -7,7 +7,7 @@ POST {{host}}/v1/cryptography/ciphertexts
 }
 HTTP 201
 [Asserts]
-jsonpath "$['$id']" isString
+jsonpath "$.['$id']" isString
 jsonpath "$.['$sequence']" isNumber
 jsonpath "$.['$permissions']" count == 0
 jsonpath "$.['$databaseId']" == "main"

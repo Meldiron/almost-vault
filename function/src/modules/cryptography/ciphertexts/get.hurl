@@ -9,15 +9,15 @@ HTTP 201
 [Captures]
 secret_id: jsonpath "$.['$id']"
 [Asserts]
-jsonpath "$['$id']" isString
+jsonpath "$.['$id']" isString
 jsonpath "$.reads" == 3
 
 # Get an existing secret
 GET {{host}}/v1/cryptography/ciphertexts/{{secret_id}}
 HTTP 200
 [Asserts]
-jsonpath "$['$id']" isString
-jsonpath "$['$id']" == "{{secret_id}}"
+jsonpath "$.['$id']" isString
+jsonpath "$.['$id']" == "{{secret_id}}"
 jsonpath "$.['$sequence']" isNumber
 jsonpath "$.['$permissions']" count == 0
 jsonpath "$.['$databaseId']" == "main"
@@ -51,7 +51,7 @@ HTTP 201
 [Captures]
 secret_id: jsonpath "$.['$id']"
 [Asserts]
-jsonpath "$['$id']" isString
+jsonpath "$.['$id']" isString
 jsonpath "$.ttl" == "mock"
 
 GET {{host}}/v1/cryptography/ciphertexts/{{secret_id}}
