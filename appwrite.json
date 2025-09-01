@@ -12,8 +12,8 @@
             ],
             "events": [],
             "scopes": [
-              "documents.read",
-              "documents.write"
+                "documents.read",
+                "documents.write"
             ],
             "schedule": "",
             "timeout": 30,
@@ -40,6 +40,99 @@
             "timeout": 30,
             "logging": true,
             "path": "site"
+        }
+    ],
+    "projectName": "almost-vault",
+    "settings": {
+        "services": {
+            "account": false,
+            "avatars": false,
+            "databases": true,
+            "locale": false,
+            "health": true,
+            "storage": false,
+            "teams": false,
+            "users": true,
+            "sites": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": false
+        },
+        "auth": {
+            "methods": {
+                "jwt": false,
+                "phone": false,
+                "invites": false,
+                "anonymous": false,
+                "email-otp": false,
+                "magic-url": false,
+                "email-password": false
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "databases": [
+        {
+            "$id": "main",
+            "name": "main",
+            "enabled": true
+        }
+    ],
+    "tables": [
+        {
+            "$id": "secrets",
+            "$permissions": [
+                "create(\"any\")"
+            ],
+            "databaseId": "main",
+            "name": "secrets",
+            "enabled": true,
+            "columns": [
+                {
+                    "key": "reads",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "min": 1,
+                    "max": 1000,
+                    "default": null
+                },
+                {
+                    "key": "ttl",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "hour",
+                        "day",
+                        "week",
+                        "month",
+                        "year",
+                        "mock"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "secret",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 2048,
+                    "default": null,
+                    "encrypt": true
+                }
+            ],
+            "indexes": []
         }
     ]
 }
