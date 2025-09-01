@@ -9,7 +9,7 @@
     "format": "biome format --write ./src",
     "format:check": "biome format ./src",
     "check": "biome lint --write ./src",
-    "test": "hurl --test ."
+    "test": "hurl --variable host=http://localhost:4000 --test ."
   },
   "dependencies": {
     "@koa/bodyparser": "^6.0.0",
