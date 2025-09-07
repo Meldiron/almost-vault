@@ -1,13 +1,24 @@
 import './style.css';
 import 'basecoat-css/all';
 import Alpine from 'alpinejs';
-import { Client, ID, TablesDB } from 'appwrite';
+import { Client, Functions, ID, TablesDB } from 'appwrite';
 
 // Appwrite SDK initialization
 const client = new Client()
   .setEndpoint('https://fra.cloud.appwrite.io/v1')
   .setProject('almost-vault');
-const tables = new TablesDB(client);
+const functions = new Functions(client);
+
+// Warm-start functions for faster executions
+(async () => {
+  try {
+    await functions.createExecution({
+      functionId: 'api',
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+})();
 
 // Tabs functionality
 Alpine.data('tabs', () => ({
